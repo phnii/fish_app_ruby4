@@ -1,0 +1,79 @@
+<div class="container bg-white mb-3">
+  <h3 class="text-center mt-5 pt-3"><%= @user.name %>の投稿履歴</h1>
+  <div class="wrapper d-flex">
+    <div class="user-info col-4 mt-5 mr-3">
+    <p>ユーザー名：<%= @user.name %></p>
+    <p>投稿数：<%= @trips.count %></p>
+    <p><%= link_to '>>フォローリスト', follow_list_user_path(@user), class: 'text-primary' %></P>
+    <p>自己紹介</p>
+    <div class="intro-content mb-3 border-top border-bottom py-2">
+      <%= simple_format(@user.introduce) %>
+    </div>
+    <% if user_signed_in? && @user.id == current_user.id %>
+      <%= link_to '編集', edit_user_registration_path(@user.id),  class: 'btn btn-success btn-sm'%>
+    <% end %>
+  </div>
+  
+  <div class="index col-8">
+    <div class="row row-col-2 mt-5">
+      <% @trips.each do |trip| %>
+        <div class="trip-container col-6 border p-3">
+          <div class="trip-title"><%= link_to trip.title, trip_path(trip.id), class: 'text-body h5' %></div>
+          <div class="d-flex">
+            <div class="username">投稿日<%= trip.created_at.strftime('%Y/%m/%d') %>(<%= trip.prefecture.name %>)</div>
+            <div class="username ml-auto">投稿者：<%= @user.name %></div>
+          </div>
+          <div class="fish-result my-2">釣果：
+            <% trip.results.each do |result| %>
+              <%= result.fish_name %>
+            <% end %>
+          </div>
+          <div class="content-container my-2">
+            <%= trip.content.truncate(5) %>
+          </div>
+          <div class="image-container">
+          <% if trip.results.first && trip.results.first.image.attached? %>
+            <%= link_to (image_tag trip.results.first.image, width: '80%', height: 'auto'), trip.results.first.image %>
+          <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <%# <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center pagination-lg g-mt-28 g-mb-28 mt-5">
+          <!-- 前へ の部分 -->
+          {% if page_obj.has_previous %}
+              <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                      <span aria-hidden="true">&laquo;</span>
+                  </a>
+              </li>
+          {% endif %}
+
+          <!-- 数字の部分 -->
+          {% for num in page_obj.paginator.page_range %}
+              {% if num <= page_obj.number|add:5 and num >= page_obj.number|add:-5 %}
+
+                  {% if page_obj.number == num %}
+                      <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                  {% else %}
+                      <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                  {% endif %}
+              {% endif %}
+          {% endfor %}
+
+          <!-- 次へ の部分 -->
+          {% if page_obj.has_next %}
+              <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                      <span aria-hidden="true">&raquo;</span>
+                  </a>
+              </li>
+          {% endif %}
+      </ul>
+
+    </nav> %>
+  </div>
+</div>
+</div>

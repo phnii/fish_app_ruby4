@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <title>RubyFishApp</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/
+    bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" 
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body class="bg-light">
+  <header>
+    <nav class="navbar navbar-expand navbar-light bg-primary">
+      <h3 class="text-white pl-5 pr-3">FishApp</h1>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <%= link_to 'トップ', root_path, class:'nav-item nav-link text-light' %>
+          <%= link_to '投稿検索', search_trips_path, class:'nav-item nav-link text-light' %>
+          <% if not user_signed_in? %>
+          <%= link_to 'ログイン', new_user_session_path, class:'nav-item nav-link text-light' %>
+          <%= link_to '新規登録', new_user_registration_path, class:'nav-item nav-link text-light' %>
+          <% else %>
+          <%= link_to '新規投稿', new_trip_path, class:'nav-item nav-link text-light' %>
+          <%= link_to '投稿履歴', user_path(current_user), class:'nav-item nav-link text-light' %>
+          <%= link_to 'フォローリスト', follow_list_user_path(current_user), class:'nav-item nav-link text-light' %>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-item nav-link text-light btn' %>
+          <%= link_to "#{current_user.name}でログイン中", user_path(current_user), class:'nav-item nav-link text-light border' %>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <%= yield %>
+</body>
+</html>

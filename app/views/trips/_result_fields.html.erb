@@ -1,0 +1,7 @@
+<div class="nested-fields border p-3 mb-3 border-primary">
+  <%= f.label :fish_name, '魚名' %>
+  <%= f.text_field :fish_name, class: 'form-control mb-2 result-fish_name-counter' %>
+  <%= f.label :image, '画像', class:'result-image-counter' %>
+  <%= f.file_field :image %>
+  <%= link_to_remove_association 'remove', f, class: 'btn btn-danger' %>
+</div>

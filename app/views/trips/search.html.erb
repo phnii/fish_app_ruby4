@@ -1,0 +1,35 @@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
+<div class="container bg-white mb-3">
+  <h3 class="my-5 text-center py-3">検索フォーム</h3>
+  <div class="form-wrapper form-group d-flex border-bottom pb-3">
+    <%= form_with url: search_trips_path, local: true, method: :get, class: 'form-inline mr-4' do |f| %>
+      <%= f.label :fish_name, '魚名: ' %>
+      <%= f.text_field :keyword, class: 'form-control' %>
+      <%= f.submit '検索', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+    <% if @chart %>
+      <%= high_chart('my_chart', @chart) %>
+    <% end %>
+
+  <div class="row row-col-3 mt-5">
+  <% if @results != nil %>
+  <%= @monthly_counts %>
+    <% @results.each do |result| %>
+    <div class="trip-container col-4 border p-3">
+      <div class="trip-title my-2">
+        <%= link_to result.trip.title, trip_path(result.trip.id), class: 'text-body h5' %>
+      </div>
+      <div class=" mb-2">
+        <div class="username">投稿日：<%= result.created_at.strftime('%Y/%m/%d') %>(<%= result.trip.prefecture.name %>)</div>
+        <div class="username">投稿者：<a href="{% url 'user_trips' result.trip__user__id %}" class="text-body"><%= result.trip.user.name %></a></div>
+      </div>
+      <div class="fish-image">
+        <%= image_tag result.image, width: '30%', height: '30%', class: 'd-block, mx-auto' if result.image.attached? %>
+      </div>
+    </div>
+    <% end %>
+    <% end %>
+  </div>
+</div>

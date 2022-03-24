@@ -1,0 +1,28 @@
+<div class="container bg-white mb-3">
+<div class="row row-col-2 mt-5">
+  <% @trips.each do |trip| %>
+    <div class="trip-container col-6 border p-3">
+      <div class="trip-title"><%= link_to trip.title, trip_path(trip.id), class: 'text-body h5' %></div>
+      <div class="d-flex mt-2">
+        <div class="username">投稿日<%= trip.created_at.strftime('%Y/%m/%d %H:%M:%S') %> (<%= trip.prefecture.name %>)</div>
+        <div class="username ml-auto">投稿者：<%= link_to trip.user.name, user_path(trip.user), class:'ml-auto, text-body' %></div>
+      </div>
+      <div class="fish-result my-2">釣果：
+        <% trip.results.each do |result| %>
+          <%= result.fish_name %>
+        <% end %>
+      </div>
+      <div class="content-container my-2">
+        <%= trip.content %>
+      </div>
+      <div class="image-container">
+      <% if trip.results.first %>
+        <% if trip.results.first.image.attached?%>
+          <%= link_to image_tag(trip.results.first.image, width: '80%', height: 'auto'), trip.results.first.image %>
+        <% end %>
+      <% end %>
+      </div>
+    </div>
+  <% end %>
+
+</div>

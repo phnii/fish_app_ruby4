@@ -1,0 +1,25 @@
+<div class="container bg-white mb-3 pb-3">
+  <h3 class="text-center py-3 my-5">新規投稿</h1>
+  <div class="form-wrapper d-grid col-6 mx-auto gap-2 ">
+    <%# <form id="form-container" action="" method="post" enctype="multipart/form-data"> %>
+    <%= form_with model: @trip, url: trips_path, local: true, method: :post do |s| %>
+      <%= render partial: 'error_messages', locals: { model: @trip} %>
+      <div class="tripform">
+        <%= s.label :title, 'タイトル' %>
+        <%= s.text_field :title, placeholder: 'タイトル', class: 'form-control' %>
+        <%= s.label :prefecture_id, '都道府県' %>
+        <%= s.collection_select(:prefecture_id, Prefecture.all, :id, :name, {}, class: 'form-control') %>
+        <%= s.label :content, '内容' %>
+        <%= s.text_area :content, placehodler: '内容', class: 'form-control' %>
+      </div>
+      <div class="boundery border-bottom border-top text-center mb-2">釣果</div>
+        <%= s.fields_for :results do |t| %>
+          <%= render 'result_fields', f: t %>
+        <% end %>
+        <div class="links">
+          <%= link_to_add_association 'add', s, :results, class: 'btn btn-primary' %>
+        </div>
+      <%= s.submit '送信', class: 'btn btn-block btn-success mt-3 mb-3' %>
+    <% end %>
+  </div>
+</div>

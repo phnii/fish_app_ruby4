@@ -1,0 +1,38 @@
+<div class="container bg-white mb-3 pb-3">
+  <h3 class="text-center py-3 my-5">編集</h1>
+  <div class="form-wrapper d-grid col-6 mx-auto gap-2 ">
+    <%# <form id="form-container" action="" method="post" enctype="multipart/form-data"> %>
+    <%= form_with model: @trip, local: true do |s| %>
+      <%= render partial: 'error_messages', locals: { model: @trip} %>
+      <div class="tripform">
+        <%= s.label :title, 'タイトル' %>
+        <%= s.text_field :title, placeholder: 'タイトル', class: 'form-control' %>
+        <%= s.label :prefecture_id, '都道府県' %>
+        <%= s.collection_select(:prefecture_id, Prefecture.all, :id, :name, {}, class: 'form-control') %>
+        <%= s.label :content, '内容' %>
+        <%= s.text_area :content, placehodler: '内容', class: 'form-control' %>
+      </div>
+      <div class="boundery border-bottom border-top text-center mb-2">釣果</div>
+        <%= s.fields_for :results do |t| %>
+          <% unless t.object %>
+            <%= render 'result_fields', f: t %>
+          <% end %>
+        <% end %>
+        <div class="past-results">
+          <%= s.fields_for :results do |t| %>
+            <div class="past-result">
+              <%= t.object.fish_name %>
+              <%= image_tag t.object.image, width: '30%', height: '30%' if t.object.image.attached? %>
+              <%= t.label '削除' %>
+              <%= t.check_box :_destroy %>
+            </div>
+          <% end %>
+        </div>
+        <div class="links">
+          <%= link_to_add_association 'add', s, :results, class: 'btn btn-primary' %>
+        </div>
+      <%= s.submit '送信', class: 'btn btn-block btn-success mt-3 mb-3' %>
+    <% end %>
+
+  </div>
+</div>
