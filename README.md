@@ -129,7 +129,7 @@ http://fish-app-ee246f6eb5b2565b.elb.ap-northeast-1.amazonaws.com/trips/index/
 ### ローカルでの動作確認法  
 こちらのローカル用のリポジトリからgit cloneします。
 ```
-git clone https://github.com/phnii/fish_app_for_local.git
+git clone https://github.com/phnii/fish_app_ruby4.git
 ```
 docker-compose.ymlファイルがあるディレクトリの中で次のコマンドを実行しコンテナを立ち上げます。
 ```
