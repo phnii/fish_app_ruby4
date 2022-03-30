@@ -135,3 +135,18 @@ docker-compose.ymlファイルがあるディレクトリの中で次のコマ�
 ```
 docker-compose up --build -d
 ```
+webコンテナの中に入ります。
+```
+docker-compose exec web bin/bash
+```
+マイグレーションの実行をします。  
+DBが完全に立ち上がっていない場合エラーが発生する場合があるので、その時は数分置いてから再度試してください。  
+```
+rails db:migrate
+```
+成功したらサーバーを立ち上げます。
+```
+rails s -b 0.0.0.0
+```
+localhost:3000にアクセスして動作確認ができます。  
+確認が終了したらクローンしたディレクトリ、作成したイメージ、ボリューム(fish_app_ruby_mysql-data)を削除してください。
