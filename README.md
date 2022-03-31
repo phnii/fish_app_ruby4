@@ -1,4 +1,4 @@
-# FishApp(Ruby)
+# FishApp(Ruby版)
 こちらはPythonとDjangoで作成したものをRubyとRuby on Railsで作り直したものです。  
 機能はどちらも同じものを実装しました。  
 ネット上の動作確認はDjangoで作成した方で確認できます。
@@ -139,8 +139,11 @@ webコンテナの中に入ります。
 ```
 docker-compose exec web bin/bash
 ```
-マイグレーションの実行をします。  
-DBが完全に立ち上がっていない場合エラーが発生する場合があるので、その時は数分置いてから再度試してください。  
+yarnのインストールをします。
+```
+yarn install --check-files
+```
+マイグレーションの実行をします。   
 ```
 rails db:migrate
 ```
